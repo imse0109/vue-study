@@ -26,6 +26,21 @@
 </template>
 
 <script>
+import * as firebase from 'firebase'
+// Initialize Firebase
+var config = {
+  apiKey: "AIzaSyC3p8_vXGN2I_M6gT8GpBIUnjISGUwrH8A",
+  authDomain: "vue-works.firebaseapp.com",
+  databaseURL: "https://vue-works.firebaseio.com",
+  projectId: "vue-works",
+  storageBucket: "vue-works.appspot.com",
+  messagingSenderId: "897883747796"
+};
+firebase.initializeApp(config);
+var database = firebase.database()
+
+database.ref('TodoList').on('value', snapshot => console.log(snapshot.val()))
+
 export default {
     data(){
         return {
@@ -44,6 +59,7 @@ export default {
         createTodo(name){
             if(name != null){
                 this.items.push({title:name});
+                database.ref('TodoList').push({todo: this.item})
                 this.title = null;
             }
         }
