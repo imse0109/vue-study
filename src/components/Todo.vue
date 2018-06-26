@@ -6,21 +6,28 @@
       v-model="name"
       :rules="nameRules"
       :counter="10"
-      label="TodoList"
       required
       v-on:keyup.enter="createTodo(name)"
     ></v-text-field>
   </v-form>
   <v-btn block color="secondary" @click="createTodo(name)">추가</v-btn>
   <v-list>
-        <v-list-tile v-for="(item,index) in items" :key="item.title">
-            <v-list-tile-content>
-                <v-list-tile-title v-text="item.title"></v-list-tile-title>
-            </v-list-tile-content>
-            <v-btn icon @click="deleteTodo(index)">
-                <v-icon color="grey lighten-1">delete</v-icon>
-            </v-btn>
-        </v-list-tile>
+      <template v-for="(item,index) in items">
+            <v-list-tile :key="item.title">
+                <v-list-tile-content>
+                    <v-list-tile-title v-if="item !== editingItem" v-text="item.title"></v-list-tile-title>
+                    <v-text-field v-else v-model="itemText" solo></v-text-field>
+                </v-list-tile-content>
+            </v-list-tile>
+            <div v-if="item !== editingItem">
+                <v-btn @click="deleteTodo(item, index)">DELETE</v-btn>
+                <v-btn @click="editTodo(item, index)">EDIT</v-btn>
+            </div>
+            <div v-else>
+                <v-btn @click="cancelEditing">CANCEL</v-btn>
+                <v-btn @click="updateMessage(item, itemText)">UPDATE</v-btn>
+            </div>
+      </template>
     </v-list>
 </div>
 </template>
@@ -39,33 +46,48 @@ var config = {
 firebase.initializeApp(config);
 var database = firebase.database()
 
-database.ref('TodoList').on('value', snapshot => console.log(snapshot.val()))
-
 export default {
     data(){
         return {
-           items: [
-                { title: 'HTML'},
-                { title: 'CSS'},
-                { title: 'JAVASCRIPT'},
-                { title: 'JQUERY'}
-            ]
+           items: [],
+           editingItem: null
         };
     },
     methods:{
-        deleteTodo(i){
-            this.items.splice(i,1);
-        },
         createTodo(name){
             if(name != null){
-                this.items.push({title:name});
-                database.ref('TodoList').push({todo: this.item})
-                this.title = null;
+                //this.items.push({title:name});
+                database.ref('TodoList').push({title:name});
+                this.name = null;
             }
+        },
+        deleteTodo(item, index){
+            this.items.splice(index,1);
+            database.ref('TodoList').child(item.id).remove();
+        },
+        editTodo(item){
+            this.editingItem = item;
+        },
+        cancelEditing(){
+            this.editingItem = ''
+        },
+        updateMessage(item, itemText){
+            database.ref('TodoList').child(item.id).update({title: itemText})
+            this.itemText = null;
+            this.cancelEditing();
         }
     },
     mounted() {
-        //console.log('Component mounted.')
+    }, 
+    created(){
+        // value = snapshot.val() | key = snapshot.key
+        database.ref('TodoList').on('child_added', snapshot => this.items.push({...snapshot.val(), id: snapshot.key}))
+
+        database.ref('TodoList').on('child_changed', snapshot => {
+             const updateMessage = this.items.find(item => item.id === snapshot.key)
+             const index = this.items.indexOf(updateMessage)
+             this.items[index].title = snapshot.val().title
+        })
     }
 }
 </script>
