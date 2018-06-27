@@ -11,12 +11,12 @@
     ></v-text-field>
   </v-form>
   <v-btn block color="secondary" @click="createTodo(name)">추가</v-btn>
-  <v-list>
+  <v-list two-line>
       <template v-for="(item,index) in items">
             <v-list-tile :key="item.title">
                 <v-list-tile-content>
                     <v-list-tile-title v-if="item !== editingItem" v-text="item.title"></v-list-tile-title>
-                    <v-text-field v-else v-model="itemText" solo></v-text-field>
+                    <v-text-field v-else v-model="itemText" required></v-text-field>
                 </v-list-tile-content>
             </v-list-tile>
             <div v-if="item !== editingItem">
