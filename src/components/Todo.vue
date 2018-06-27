@@ -105,10 +105,10 @@ export default {
 
 <style>
 .theme--light .application--wrap .list{margin:20px 0 0 0;background:none;}
-.list > div{margin:10px 0 0 0;background:#fff;border:1px solid #263238;border-radius:3px;}
-.list > .btn-wrap{background:none;}
-.input-group__details{min-height:1px;}
-.btn{margin:6px 0;min-width:40px;}
-.list__tile__title{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
-.input-group__input input{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
+.theme--light .application--wrap .list > div{margin:10px 0 0 0;background:#fff;border:1px solid #263238;border-radius:3px;}
+.theme--light .application--wrap .list > .btn-wrap{background:none;}
+.theme--light .application--wrap .input-group__details{min-height:1px;}
+.theme--light .application--wrap .btn{margin:6px 0;min-width:40px;}
+.theme--light .application--wrap .list__tile__title{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
+.theme--light .application--wrap .input-group__input input{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
 </style>
