@@ -1,34 +1,45 @@
 <template>
-<div class="container">
-  <h2>Todo List</h2>
-  <v-form v-model="valid">
-    <v-text-field
-      v-model="name"
-      :rules="nameRules"
-      :counter="10"
-      required
-      v-on:keyup.enter="createTodo(name)"
-    ></v-text-field>
-  </v-form>
-  <v-btn block color="secondary" @click="createTodo(name)">추가</v-btn>
-  <v-list two-line>
-      <template v-for="(item,index) in items">
+<div>
+  <v-toolbar color="deep-orange">
+        <!--<v-toolbar-side-icon></v-toolbar-side-icon>-->
+        <v-toolbar-title class="white--text">toDo+</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <v-btn icon>
+            <v-icon class="white--text">search</v-icon>
+        </v-btn>
+        <!--<v-btn icon>
+            <v-icon>view_module</v-icon>
+        </v-btn>-->
+  </v-toolbar>
+  <v-container>
+    <v-form v-model="valid">
+        <v-text-field
+        v-model="name"
+        :rules="nameRules"
+        required
+        v-on:keyup.enter="createTodo(name)"
+        ></v-text-field>
+    </v-form>
+    <v-btn block color="blue-grey darken-4" class="white--text" @click="createTodo(name)"><v-icon>add</v-icon></v-btn>
+    <v-list two-line>
+        <template v-for="(item,index) in items">
             <v-list-tile :key="item.title">
                 <v-list-tile-content>
                     <v-list-tile-title v-if="item !== editingItem" v-text="item.title"></v-list-tile-title>
                     <v-text-field v-else v-model="itemText" required></v-text-field>
                 </v-list-tile-content>
+                <div class="btn-wrap" v-if="item !== editingItem">
+                    <v-btn color="blue-grey darken-4" class="white--text" small @click="deleteTodo(item, index)"><v-icon>delete</v-icon></v-btn>
+                    <v-btn color="blue-grey darken-4" class="white--text" small @click="editTodo(item, index)"><v-icon>edit</v-icon></v-btn>
+                </div>
+                <div class="btn-wrap" v-else>
+                    <v-btn color="blue-grey darken-4" class="white--text" small @click="cancelEditing"><v-icon>cancel</v-icon></v-btn>
+                    <v-btn color="blue-grey darken-4" class="white--text" small @click="updateMessage(item, itemText)"><v-icon>update</v-icon></v-btn>
+                </div>
             </v-list-tile>
-            <div v-if="item !== editingItem">
-                <v-btn @click="deleteTodo(item, index)">DELETE</v-btn>
-                <v-btn @click="editTodo(item, index)">EDIT</v-btn>
-            </div>
-            <div v-else>
-                <v-btn @click="cancelEditing">CANCEL</v-btn>
-                <v-btn @click="updateMessage(item, itemText)">UPDATE</v-btn>
-            </div>
-      </template>
+        </template>
     </v-list>
+  </v-container>
 </div>
 </template>
 
@@ -92,3 +103,12 @@ export default {
 }
 </script>
 
+<style>
+.theme--light .application--wrap .list{margin:20px 0 0 0;background:none;}
+.list > div{margin:10px 0 0 0;background:#fff;border:1px solid #263238;border-radius:3px;}
+.list > .btn-wrap{background:none;}
+.input-group__details{min-height:1px;}
+.btn{margin:6px 0;min-width:40px;}
+.list__tile__title{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
+.input-group__input input{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
+</style>
