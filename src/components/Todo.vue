@@ -24,6 +24,7 @@
     <v-list two-line>
         <template v-for="(item,index) in items">
             <v-list-tile :key="item.title">
+                <v-checkbox color="red darken-3" v-model="item.itemCheck" :value="item.itemCheck" @click="checkTodo(item, !item.itemCheck)"></v-checkbox>
                 <v-list-tile-content>
                     <v-list-tile-title v-if="item !== editingItem" v-text="item.title"></v-list-tile-title>
                     <v-text-field v-else v-model="itemText" required></v-text-field>
@@ -34,7 +35,7 @@
                 </div>
                 <div class="btn-wrap" v-else>
                     <v-btn color="blue-grey darken-4" class="white--text" small @click="cancelEditing"><v-icon>cancel</v-icon></v-btn>
-                    <v-btn color="blue-grey darken-4" class="white--text" small @click="updateMessage(item, itemText)"><v-icon>update</v-icon></v-btn>
+                    <v-btn color="blue-grey darken-4" class="white--text" small @click="updateMessage(item, itemText)"><v-icon>done</v-icon></v-btn>
                 </div>
             </v-list-tile>
         </template>
@@ -68,7 +69,7 @@ export default {
         createTodo(name){
             if(name != null){
                 //this.items.push({title:name});
-                database.ref('TodoList').push({title:name});
+                database.ref('TodoList').push({title:name, itemCheck:false});
                 this.name = null;
             }
         },
@@ -78,6 +79,9 @@ export default {
         },
         editTodo(item){
             this.editingItem = item;
+        },
+        checkTodo(item, itemCheckValue){
+            database.ref('TodoList').child(item.id).update({itemCheck:itemCheckValue});
         },
         cancelEditing(){
             this.editingItem = ''
@@ -105,10 +109,22 @@ export default {
 
 <style>
 .theme--light .application--wrap .list{margin:20px 0 0 0;background:none;}
-.theme--light .application--wrap .list > div{margin:10px 0 0 0;background:#fff;border:1px solid #263238;border-radius:3px;}
+.theme--light .application--wrap .list > div{margin:10px 0 0 0;background:#fff;border:1px solid #263238;border-radius:3px;width:90%;float:right;}
 .theme--light .application--wrap .list > .btn-wrap{background:none;}
 .theme--light .application--wrap .input-group__details{min-height:1px;}
 .theme--light .application--wrap .btn{margin:6px 0;min-width:40px;}
 .theme--light .application--wrap .list__tile__title{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
 .theme--light .application--wrap .input-group__input input{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
+
+
+.theme--light .application--wrap .input-group.checkbox{position:absolute;top:26px;left:-37px;width:auto;}
+/*
+.theme--light .application--wrap .input-group.checkbox{position:absolute;top:0;left:0;height:100%;}
+.theme--light .application--wrap .input-group.checkbox label{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;color:#000;top:21px;left:16px;}
+.theme--light .application--wrap .input-group.checkbox .input-group__input{height:100%;}
+.theme--light .application--wrap .input-group.checkbox .input-group__input i{display:none;}
+.theme--light .application--wrap .input-group.checkbox .input-group__input div{width:100%;height:100%;top:0;transform:translate(0);border-radius:0;}
+.theme--light .application--wrap .input-group.checkbox .input-group__input div:before{display:none;}
+.theme--light .application--wrap .input-group.checkbox.input-group--active .input-group__input div{background:#ffc107;opacity:0.7;}
+*/
 </style>
