@@ -1,16 +1,5 @@
 <template>
 <div>
-  <v-toolbar color="deep-orange">
-        <!--<v-toolbar-side-icon></v-toolbar-side-icon>-->
-        <v-toolbar-title class="white--text">toDo+</v-toolbar-title>
-        <v-spacer></v-spacer>
-        <v-btn icon>
-            <v-icon class="white--text">search</v-icon>
-        </v-btn>
-        <!--<v-btn icon>
-            <v-icon>view_module</v-icon>
-        </v-btn>-->
-  </v-toolbar>
   <v-container>
     <v-form v-model="valid">
         <v-text-field
@@ -109,13 +98,13 @@ export default {
 </script>
 
 <style>
-.theme--light .application--wrap .list{margin:20px 0 0 0;background:none;}
-.theme--light .application--wrap .list > div{margin:10px 0 0 0;background:#fff;border:1px solid #263238;border-radius:3px;width:100%;float:right;}
-.theme--light .application--wrap .list > .btn-wrap{background:none;}
-.theme--light .application--wrap .input-group__details{min-height:1px;}
-.theme--light .application--wrap .btn{margin:6px 0;min-width:40px;}
-.theme--light .application--wrap .list__tile__title{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
-.theme--light .application--wrap .input-group__input input{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
+.theme--light .application--wrap .container .list{margin:20px 0 0 0;background:none;}
+.theme--light .application--wrap .container .list > div{margin:10px 0 0 0;background:#fff;border:1px solid #263238;border-radius:3px;width:100%;float:right;}
+.theme--light .application--wrap .container .list > .btn-wrap{background:none;}
+.theme--light .application--wrap .container .list .input-group__details{min-height:1px;}
+.theme--light .application--wrap .container .list .btn{margin:6px 0;min-width:40px;}
+.theme--light .application--wrap .container .list .list__tile__title{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
+.theme--light .application--wrap .container .list .input-group__input input{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
 
 /*
 .theme--light .application--wrap .input-group.checkbox{position:absolute;top:26px;left:-37px;width:auto;}
