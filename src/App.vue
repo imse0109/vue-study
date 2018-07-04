@@ -8,6 +8,12 @@
           			:to="item.path">
           			<v-list-tile-content >{{ item.title }}</v-list-tile-content>
 				</v-list-tile>
+				<v-list-tile @click="userSignOut" v-if="isAuthenticated">
+          			<v-list-tile-action>
+            			<v-icon>exit_to_app</v-icon>
+          			</v-list-tile-action>
+          			<v-list-tile-content>Sign Out</v-list-tile-content>
+        		</v-list-tile>
       		</v-list>
     	</v-navigation-drawer>
 
@@ -27,6 +33,10 @@
           			:key="item.title"
           			:to="item.path"
 					class="white--text">{{ item.title }}</v-btn>
+				<v-btn flat @click="userSignOut" v-if="isAuthenticated">
+          			<v-icon left>exit_to_app</v-icon>
+          			Sign Out
+        		</v-btn>
 			</v-toolbar-items>
     	</v-toolbar>
 
@@ -44,17 +54,28 @@ export default {
 		}
 	},
 	computed : {
+		isAuthenticated () {
+        	return this.$store.getters.isAuthenticated
+      	},
 		menuItems () {
-         	return [
-            	{ title: 'Join', path: '/join' },
-            	{ title: 'Login', path: '/login' }
-          	]
+			if (this.isAuthenticated) {
+          		return [
+            		{ title: 'Todo', path: '/todo', icon: 'todo' }
+          		]
+        	} else {
+         		return [
+            		{ title: 'Join', path: '/join' },
+            		{ title: 'Login', path: '/login' }
+			  	]
+			}
         }
-	}
+	},
+    methods: {
+      userSignOut () {
+        this.$store.dispatch('userSignOut')
+      }
+    }
 }
 </script>
 
-<style>
-*{font-family: "NotoSansKR", sans-serif;}
-</style>
 

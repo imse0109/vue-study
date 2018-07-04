@@ -6,10 +6,10 @@
         v-model="name"
         :rules="nameRules"
         required
-        v-on:keyup.enter="createTodo(name)"
+        v-on:keyup.enter="createTodo"
         ></v-text-field>
     </v-form>
-    <v-btn block color="blue-grey darken-4" class="white--text" @click="createTodo(name)"><v-icon>add</v-icon></v-btn>
+    <v-btn block color="blue-grey darken-4" class="white--text" @click="createTodo"><v-icon>add</v-icon></v-btn>
     <v-list two-line>
         <template v-for="(item,index) in items">
             <v-list-tile :key="item.title">
@@ -25,7 +25,7 @@
                 </div>
                 <div class="btn-wrap" v-else>
                     <v-btn color="blue-grey darken-4" class="white--text" small @click="cancelEditing"><v-icon>cancel</v-icon></v-btn>
-                    <v-btn color="blue-grey darken-4" class="white--text" small @click="updateMessage(item, itemText)"><v-icon>done</v-icon></v-btn>
+                    <v-btn color="blue-grey darken-4" class="white--text" small @click="updateMessage(item, itemText, index)"><v-icon>done</v-icon></v-btn>
                 </div>
             </v-list-tile>
         </template>
@@ -35,60 +35,64 @@
 </template>
 
 <script>
-import * as firebase from 'firebase'
-// Initialize Firebase
-var config = {
-  apiKey: "AIzaSyC3p8_vXGN2I_M6gT8GpBIUnjISGUwrH8A",
-  authDomain: "vue-works.firebaseapp.com",
-  databaseURL: "https://vue-works.firebaseio.com",
-  projectId: "vue-works",
-  storageBucket: "vue-works.appspot.com",
-  messagingSenderId: "897883747796"
-};
-firebase.initializeApp(config);
-var database = firebase.database()
-
+import firebase from 'firebase'
 export default {
     data(){
         return {
-           items: [],
-           editingItem: null
+            items: [],
+            editingItem: null,
+            itemCheck: false,
+            user : firebase.auth().currentUser
         };
     },
     methods:{
-        createTodo(name){
+        createTodo(){
             if(name != null){
-                //this.items.push({title:name});
-                database.ref('TodoList').push({title:name, itemCheck:false});
+                const todoData = {
+                    title : this.name,
+                    itemCheck : false
+                }
                 this.name = null;
+                this.$store.dispatch('createTodo', todoData)
+                //database.ref('TodoList').push({title:name, itemCheck:false});
             }
         },
         deleteTodo(item, index){
+            const itemId = this.items[index].id
             this.items.splice(index,1);
-            database.ref('TodoList').child(item.id).remove();
+            this.$store.dispatch('deleteTodo', itemId)
+            
+            //firebase.database().ref(this.user.uid).child(item.id).remove();
         },
         editTodo(item){
             this.editingItem = item;
         },
-        checkTodo(item, itemCheckValue){
-            database.ref('TodoList').child(item.id).update({itemCheck:itemCheckValue});
-        },
+        //checkTodo(item, itemCheckValue){
+        //    firebase.database().ref(this.user.uid).child(item.id).update({itemCheck:itemCheckValue});
+        //},
         cancelEditing(){
             this.editingItem = ''
         },
-        updateMessage(item, itemText){
-            database.ref('TodoList').child(item.id).update({title: itemText})
+        updateMessage(item, itemText, index){
+            const itemGroup = {
+                itemId : this.items[index].id,
+                itemText : itemText
+            }
+            this.$store.dispatch('updateMessage', itemGroup)
+            //firebase.database().ref(this.user.uid).child(item.id).update({title: itemText})
             this.itemText = null;
             this.cancelEditing();
         }
+    },
+    computed : {
     },
     mounted() {
     }, 
     created(){
         // value = snapshot.val() | key = snapshot.key
-        database.ref('TodoList').on('child_added', snapshot => this.items.push({...snapshot.val(), id: snapshot.key}))
+        firebase.database().ref(this.user.uid).on('child_added', snapshot => this.items.push({...snapshot.val(), id: snapshot.key}))
 
-        database.ref('TodoList').on('child_changed', snapshot => {
+        firebase.database().ref(this.user.uid).on('child_changed', snapshot => {
              const updateMessage = this.items.find(item => item.id === snapshot.key)
              const index = this.items.indexOf(updateMessage)
              this.items[index].title = snapshot.val().title
