@@ -151,7 +151,7 @@ export default {
 .theme--light .application--wrap .container .list .list__tile__title{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
 .theme--light .application--wrap .container .list .input-group__input input{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
 
-.speed-dial{position:fixed;right:0;bottom:0;}
+.speed-dial{position:fixed !important;right:0;bottom:0;}
 .speed-dial .btn--floating .icon{top:25% !important;position:absolute;}
 
 /*
