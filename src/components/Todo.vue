@@ -71,7 +71,7 @@ import firebase from 'firebase'
 export default {
     data(){
         return {
-            name:null,
+            name: null,
             items: [],
             editingItem: null,
             itemCheck: false,
@@ -83,7 +83,7 @@ export default {
     },
     methods:{
         createTodo(){
-            if(name != null){
+            if(this.name != null){
                 const todoData = {
                     title : this.name,
                     itemCheck : false
