@@ -2,23 +2,27 @@
 <div>
     <v-container>
         <v-form v-model="valid">
-            <v-text-field v-model="name" required v-on:keyup.enter="createTodo" prepend-icon="work" label="Work"
+            <v-text-field 
+                v-model="name" 
+                required 
+                prepend-icon="work" 
+                label="Work"
+                :rules="[rules.required]"
             ></v-text-field>
             <v-dialog
                 ref="dialog"
                 v-model="modal"
                 :return-value.sync="date"
-                persistent
-                lazy
                 full-width
-                required
                 width="290px">
                 <v-text-field
                 slot="activator"
                 v-model="date"
                 label="Picker in Date"
                 prepend-icon="event"
-                readonly></v-text-field>
+                readonly
+                required
+                :rules="[rules.required]"></v-text-field>
                 <v-date-picker v-model="date" scrollable>
                     <v-spacer></v-spacer>
                     <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
@@ -29,17 +33,16 @@
                 ref="dialog2"
                 v-model="modal2"
                 :return-value.sync="time"
-                persistent
-                lazy
                 full-width
-                required
                 width="290px">
                 <v-text-field
                 slot="activator"
                 v-model="time"
                 label="Picker in Time"
                 prepend-icon="access_time"
-                readonly></v-text-field>
+                readonly
+                required
+                :rules="[rules.required]"></v-text-field>
                 <v-time-picker v-model="time" actions>
                 <v-spacer></v-spacer>
                 <v-btn flat color="primary" @click="modal2 = false">Cancel</v-btn>
@@ -47,7 +50,7 @@
                 </v-time-picker>
             </v-dialog>
             <v-card height="56px">
-                <v-bottom-nav :active.sync="bottomNav" :color="color" :value="true" absolute shift>
+                <v-bottom-nav :active.sync="bottomNav" :color="importantColor" :value="true" absolute shift>
                     <v-btn dark @click="important = 1">
                         <span>Less Important</span>
                         <v-icon>star</v-icon>
@@ -126,12 +129,16 @@ export default {
             modal2: false,
 
             bottomNav: 1,
-            important: 3
+            important: 3,
+
+            rules:{
+                required: value => !!value || 'Required.'
+            }
         };
     },
     methods:{
         createTodo(){
-            if(this.name != null){
+            if(this.name != null && this.date != null && this.time != null){
                 const todoData = {
                     title : this.name,
                     date : this.date,
@@ -141,10 +148,10 @@ export default {
                 }
                 this.$store.dispatch('createTodo', todoData)
                 //database.ref('TodoList').push({title:name, itemCheck:false});
+                this.name = null
+                this.date = null
+                this.time = null
             }
-            this.name = null
-            this.date = null
-            this.time = null
         },
         deleteTodo(item, index){
             const itemId = this.items[index].id
@@ -204,7 +211,7 @@ export default {
         }
     },
     computed : {
-        color () {
+        importantColor () {
             switch (this.bottomNav) {
                 case 0: return 'blue-grey'
                 case 1: return 'teal'
@@ -241,7 +248,7 @@ nav.toolbar--fixed{z-index:10;}
 .theme--light .application--wrap .container .list .list_item_important{position:absolute;top:-3px;right:15px;width:auto;}
 .theme--light .application--wrap .container .list .list_item_title{height:36px;line-height:16px;}
 
-.speed-dial{position:fixed !important;right:10px;bottom:10px;}
+.speed-dial{position:fixed !important;right:10px;bottom:10px;z-index:10;}
 .speed-dial .btn--floating .icon{top:25% !important;position:absolute;}
 
 /*
