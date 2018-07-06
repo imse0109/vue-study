@@ -7,7 +7,7 @@
                 required 
                 prepend-icon="work" 
                 label="Work"
-                :rules="[rules.required]"
+                
             ></v-text-field>
             <v-dialog
                 ref="dialog"
@@ -22,7 +22,7 @@
                 prepend-icon="event"
                 readonly
                 required
-                :rules="[rules.required]"></v-text-field>
+                ></v-text-field>
                 <v-date-picker v-model="date" scrollable>
                     <v-spacer></v-spacer>
                     <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
@@ -42,7 +42,7 @@
                 prepend-icon="access_time"
                 readonly
                 required
-                :rules="[rules.required]"></v-text-field>
+                ></v-text-field>
                 <v-time-picker v-model="time" actions>
                 <v-spacer></v-spacer>
                 <v-btn flat color="primary" @click="modal2 = false">Cancel</v-btn>
