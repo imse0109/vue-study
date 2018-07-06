@@ -75,9 +75,13 @@ export const store = new Vuex.Store({
 
     	createTodo ({commit}, payload) {
         	const todoItems = {
-            	title: payload.title,
+				title: payload.title,
+				date : payload.date,
+				time : payload.time,
+				important : payload.important,
             	itemCheck: payload.itemCheck
-        	}
+			}
+			console.log(todoItems)
         	let user = firebase.auth().currentUser
         	firebase.database().ref(user.uid).push(todoItems)
         	.then((data) => {
