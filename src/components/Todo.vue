@@ -121,8 +121,11 @@ export default {
         },
 
         sortByItems(){
-            console.log(this.items);
-            this.items.sort(function(a,b){return a['title'] > b['title']})
+            //console.log(this.items);
+            this.items.sort(function(a,b){
+                if (a['title'] > b['title']) return 1
+                if (a['title'] < b['title']) return -1
+            })
         }
     },
     computed : {
@@ -151,7 +154,7 @@ export default {
 .theme--light .application--wrap .container .list .list__tile__title{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
 .theme--light .application--wrap .container .list .input-group__input input{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
 
-.speed-dial{position:fixed !important;right:0;bottom:0;}
+.speed-dial{position:fixed !important;right:10px;bottom:10px;}
 .speed-dial .btn--floating .icon{top:25% !important;position:absolute;}
 
 /*
