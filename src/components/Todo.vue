@@ -1,72 +1,105 @@
 <template>
 <div>
     <v-container>
-        <v-form v-model="valid">
-            <v-text-field 
+
+
+        <v-expansion-panel>
+            <v-expansion-panel-content>
+                <div slot="header">Input</div>
+                <v-form v-model="valid">
+                    <v-select
+                        v-model="kind"
+                        :items="categoryList"
+                        label="Category"
+                        prepend-icon="list"
+                    ></v-select>
+                    <v-text-field 
+                        v-model="name" 
+                        required 
+                        prepend-icon="work" 
+                        label="Work"
+                    ></v-text-field>
+                    <v-dialog
+                        ref="dialog"
+                        v-model="modal"
+                        :return-value.sync="date"
+                        full-width
+                        width="290px">
+                        <v-text-field
+                        slot="activator"
+                        v-model="date"
+                        label="Picker in Date"
+                        prepend-icon="event"
+                        readonly
+                        required
+                        ></v-text-field>
+                        <v-date-picker v-model="date" scrollable>
+                            <v-spacer></v-spacer>
+                            <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
+                            <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
+                        </v-date-picker>
+                    </v-dialog>
+                    <v-dialog
+                        ref="dialog2"
+                        v-model="modal2"
+                        :return-value.sync="time"
+                        full-width
+                        width="290px">
+                        <v-text-field
+                        slot="activator"
+                        v-model="time"
+                        label="Picker in Time"
+                        prepend-icon="access_time"
+                        readonly
+                        required
+                        ></v-text-field>
+                        <v-time-picker v-model="time" actions>
+                        <v-spacer></v-spacer>
+                        <v-btn flat color="primary" @click="modal2 = false">Cancel</v-btn>
+                        <v-btn flat color="primary" @click="$refs.dialog2.save(time)">OK</v-btn>
+                        </v-time-picker>
+                    </v-dialog>
+                    <v-card height="56px">
+                        <v-bottom-nav :active.sync="bottomNav" :color="importantColor" :value="true" absolute shift>
+                            <v-btn dark @click="important = 1">
+                                <span>Less Important</span>
+                                <v-icon>star</v-icon>
+                            </v-btn>
+                            <v-btn dark @click="important = 3">
+                                <span>Important</span>
+                                <v-icon>star</v-icon>
+                            </v-btn>
+                            <v-btn dark @click="important = 5">
+                                <span>Very Important</span>
+                                <v-icon>star</v-icon>
+                            </v-btn>
+                        </v-bottom-nav>
+                    </v-card>
+                </v-form>
+                <v-btn block color="blue-grey darken-4" class="white--text" @click="createTodo"><v-icon>add</v-icon></v-btn>
+            </v-expansion-panel-content>
+        </v-expansion-panel>
+        
+        <v-flex xs8>
+            <v-text-field
                 v-model="name" 
-                required 
-                prepend-icon="work" 
-                label="Work"
-                
+                append-icon="search"
+                placeholder="search..." 
             ></v-text-field>
-            <v-dialog
-                ref="dialog"
-                v-model="modal"
-                :return-value.sync="date"
-                full-width
-                width="290px">
-                <v-text-field
-                slot="activator"
-                v-model="date"
-                label="Picker in Date"
-                prepend-icon="event"
-                readonly
-                required
-                ></v-text-field>
-                <v-date-picker v-model="date" scrollable>
-                    <v-spacer></v-spacer>
-                    <v-btn flat color="primary" @click="modal = false">Cancel</v-btn>
-                    <v-btn flat color="primary" @click="$refs.dialog.save(date)">OK</v-btn>
-                </v-date-picker>
-            </v-dialog>
-            <v-dialog
-                ref="dialog2"
-                v-model="modal2"
-                :return-value.sync="time"
-                full-width
-                width="290px">
-                <v-text-field
-                slot="activator"
-                v-model="time"
-                label="Picker in Time"
-                prepend-icon="access_time"
-                readonly
-                required
-                ></v-text-field>
-                <v-time-picker v-model="time" actions>
-                <v-spacer></v-spacer>
-                <v-btn flat color="primary" @click="modal2 = false">Cancel</v-btn>
-                <v-btn flat color="primary" @click="$refs.dialog2.save(time)">OK</v-btn>
-                </v-time-picker>
-            </v-dialog>
-            <v-card height="56px">
-                <v-bottom-nav :active.sync="bottomNav" :color="importantColor" :value="true" absolute shift>
-                    <v-btn dark @click="important = 1">
-                        <span>Less Important</span>
-                        <v-icon>star</v-icon>
-                    </v-btn>
-                    <v-btn dark @click="important = 3">
-                        <span>Important</span>
-                        <v-icon>star</v-icon>
-                    </v-btn>
-                    <v-btn dark @click="important = 5">
-                        <span>Very Important</span>
-                        <v-icon>star</v-icon>
-                    </v-btn>
-                </v-bottom-nav>
-            </v-card>
-        </v-form>
-        <v-btn block color="blue-grey darken-4" class="white--text" @click="createTodo"><v-icon>add</v-icon></v-btn>
+        </v-flex>
+        <v-flex xs4>
+            <v-btn dark small color="red">
+                All
+            </v-btn>
+            <v-btn dark small color="red">
+                Transactional
+            </v-btn>
+            <v-btn dark small color="red">
+                Personal
+            </v-btn>
+        </v-flex>
+        
+
         <v-list two-line>
             <template v-for="(item,index) in items">
                 <v-list-tile :key="item.title">
@@ -131,6 +164,13 @@ export default {
             bottomNav: 1,
             important: 3,
 
+            kind: null,
+            categoryList: [
+                'All',
+                'Transactional',
+                'Personal',
+            ],
+
             rules:{
                 required: value => !!value || 'Required.'
             }
@@ -138,12 +178,14 @@ export default {
     },
     methods:{
         createTodo(){
+            console.log(this.kind)
             if(this.name != null && this.date != null && this.time != null){
                 const todoData = {
                     title : this.name,
                     date : this.date,
                     time : this.time,
                     important : this.important,
+                    kind : this.kind,
                     itemCheck : false
                 }
                 this.$store.dispatch('createTodo', todoData)
@@ -151,6 +193,7 @@ export default {
                 this.name = null
                 this.date = null
                 this.time = null
+                this.kind = null
             }
         },
         deleteTodo(item, index){
@@ -236,6 +279,8 @@ export default {
 <style>
 .content{padding:56px 0 !important;}
 nav.toolbar--fixed{z-index:10;}
+.navigation-drawer{z-index:11;}
+.expansion-panel__body{padding:8px;}
 .theme--light .application--wrap .container .list{margin:20px 0 0 0;background:none;}
 .theme--light .application--wrap .container .list > div{margin:10px 0 0 0;background:#fff;border:1px solid #263238;border-radius:3px;width:100%;float:right;}
 .theme--light .application--wrap .container .list > .btn-wrap{background:none;}

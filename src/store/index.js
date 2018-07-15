@@ -79,6 +79,7 @@ export const store = new Vuex.Store({
 				date : payload.date,
 				time : payload.time,
 				important : payload.important,
+				kind : payload.kind,
             	itemCheck: payload.itemCheck
 			}
 			console.log(todoItems)
