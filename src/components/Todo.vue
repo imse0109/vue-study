@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="todo">
     <v-container>
 
 
@@ -301,25 +301,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.content{padding:56px 0 !important;}
-nav.toolbar--fixed{z-index:10;}
-.expansion-panel__body{padding:8px;}
-.theme--light .application--wrap .container .list{margin:20px 0 0 0;background:none;}
-.theme--light .application--wrap .container .list > div{margin:10px 0 0 0;background:#fff;border:1px solid #263238;border-radius:3px;width:100%;float:right;}
-.theme--light .application--wrap .container .list > .btn-wrap{background:none;}
-.theme--light .application--wrap .container .list .input-group__details{min-height:1px;}
-.theme--light .application--wrap .container .list .btn{margin:6px 0;min-width:40px;}
-.theme--light .application--wrap .container .list .list__tile__title{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
-.theme--light .application--wrap .container .list .input-group__input input{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;}
-.theme--light .application--wrap .container .list .list_item_date{position:absolute;bottom:0;left:0px;font-size:12px;background:#000;opacity:0.4;color:#fff;padding:0 0 0 16px;height:18px;line-height:18px;}
-.theme--light .application--wrap .container .list .list_item_time{position:absolute;bottom:0;left:158px;width:auto;font-size:12px;color:#fff;height:18px;line-height:18px;}
-.theme--light .application--wrap .container .list .list_item_important{position:absolute;top:-3px;right:15px;width:auto;}
-.theme--light .application--wrap .container .list .list_item_title{height:36px;line-height:16px;padding:0 24px;}
-.theme--light .application--wrap .container .list .input-group.checkbox{position:absolute;top:16px;left:13px;width:auto;z-index:10;}
-.theme--light .application--wrap .container .list .input-group.checkbox.input-group--active + .list__tile__content .list__tile__title{text-decoration:line-through;}
-
-.speed-dial{position:fixed !important;right:10px;bottom:10px;z-index:10;}
-.speed-dial .btn--floating .icon{top:25% !important;position:absolute;}
-</style>

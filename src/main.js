@@ -7,6 +7,7 @@ import Vuetify from 'vuetify'
 import firebase from 'firebase'
 import { store } from './store'
 import 'vuetify/dist/vuetify.min.css'
+import './assets/css/common.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import 'babel-polyfill'
 

@@ -46,10 +46,6 @@
   	</v-app>
 </template>
 
-<style>
-.navigation-drawer{z-index:11 !important;}
-</style>
-
 
 <script>
 export default {
