@@ -80,6 +80,7 @@ export const store = new Vuex.Store({
 				time : payload.time,
 				important : payload.important,
 				kind : payload.kind,
+				filtered : payload.filtered,
             	itemCheck: payload.itemCheck
 			}
 			console.log(todoItems)

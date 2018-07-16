@@ -78,31 +78,26 @@
                 </v-form>
                 <v-btn block color="blue-grey darken-4" class="white--text" @click="createTodo"><v-icon>add</v-icon></v-btn>
             </v-expansion-panel-content>
+            <v-expansion-panel-content>
+                <div slot="header">Search</div>
+                <v-select
+                    v-model="option"
+                    :items="categoryList"
+                    label="Search Category..."
+                    prepend-icon="list"
+                    @change="searchCategory"
+                ></v-select>
+                <v-text-field
+                    v-model="name" 
+                    prepend-icon="search"
+                    label="Search Word..." 
+                ></v-text-field>
+                </v-expansion-panel-content>
         </v-expansion-panel>
-        
-        <v-flex xs8>
-            <v-text-field
-                v-model="name" 
-                append-icon="search"
-                placeholder="search..." 
-            ></v-text-field>
-        </v-flex>
-        <v-flex xs4>
-            <v-btn dark small color="red">
-                All
-            </v-btn>
-            <v-btn dark small color="red">
-                Transactional
-            </v-btn>
-            <v-btn dark small color="red">
-                Personal
-            </v-btn>
-        </v-flex>
-        
 
         <v-list two-line>
             <template v-for="(item,index) in items">
-                <v-list-tile :key="item.title">
+                <v-list-tile :key="item.title" v-show="item.filtered=='y'">
                     <!--<v-checkbox color="red darken-3" v-model="item.itemCheck" :value="item.itemCheck" @click="checkTodo(item, !item.itemCheck)"></v-checkbox>
                     -->
                     <v-list-tile-content>
@@ -165,6 +160,8 @@ export default {
             important: 3,
 
             kind: null,
+            option: 'All',
+            filtered: 'y',
             categoryList: [
                 'All',
                 'Transactional',
@@ -178,7 +175,6 @@ export default {
     },
     methods:{
         createTodo(){
-            console.log(this.kind)
             if(this.name != null && this.date != null && this.time != null){
                 const todoData = {
                     title : this.name,
@@ -186,6 +182,7 @@ export default {
                     time : this.time,
                     important : this.important,
                     kind : this.kind,
+                    filtered : 'y',
                     itemCheck : false
                 }
                 this.$store.dispatch('createTodo', todoData)
@@ -251,6 +248,21 @@ export default {
                 if (a['important'] > b['important']) return -1
                 if (a['important'] < b['important']) return 1
             })
+        },
+
+
+        searchCategory(){
+            //console.log(this.items);
+
+            for(var i=0;i<this.items.length;i++){
+                //console.log(this.items[i].kind);
+                //console.log(this.option);
+
+                if(this.items[i].kind == this.option){
+                    //console.log(this.items[i]);
+                    this.items[i].filtered = 'n';
+                }
+            }
         }
     },
     computed : {
