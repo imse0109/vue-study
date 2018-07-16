@@ -291,7 +291,6 @@ export default {
 <style>
 .content{padding:56px 0 !important;}
 nav.toolbar--fixed{z-index:10;}
-.navigation-drawer{z-index:11;}
 .expansion-panel__body{padding:8px;}
 .theme--light .application--wrap .container .list{margin:20px 0 0 0;background:none;}
 .theme--light .application--wrap .container .list > div{margin:10px 0 0 0;background:#fff;border:1px solid #263238;border-radius:3px;width:100%;float:right;}
