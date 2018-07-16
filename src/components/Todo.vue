@@ -99,8 +99,8 @@
         <v-list two-line>
             <template v-for="(item,index) in items">
                 <v-list-tile :key="item.title" v-show="item.filtered == 'y'">
-                    <!--<v-checkbox color="red darken-3" v-model="item.itemCheck" :value="item.itemCheck" @click="checkTodo(item, !item.itemCheck)"></v-checkbox>
-                    -->
+                    <v-checkbox v-if="item !== editingItem" color="red darken-3" v-model="item.itemCheck" :value="item.itemCheck" @click="checkTodo(item, !item.itemCheck, index)"></v-checkbox>
+                    
                     <v-list-tile-content>
                         <v-list-tile-title v-if="item !== editingItem" class="list_item_title" v-text="item.title"></v-list-tile-title>
                         <v-text-field v-else v-model="itemText" required></v-text-field>
@@ -205,9 +205,15 @@ export default {
         editTodo(item){
             this.editingItem = item;
         },
-        //checkTodo(item, itemCheckValue){
-        //    firebase.database().ref(this.user.uid).child(item.id).update({itemCheck:itemCheckValue});
-        //},
+        checkTodo(item, itemCheckValue, index){
+            console.log(item);
+            const itemGroup = {
+                itemId : this.items[index].id,
+                itemCheckValue : itemCheckValue
+            }
+            this.$store.dispatch('checkTodo', itemGroup)
+            //firebase.database().ref(this.user.uid).child(item.id).update({itemCheck:itemCheckValue});
+        },
         cancelEditing(){
             this.editingItem = ''
         },
@@ -310,20 +316,10 @@ nav.toolbar--fixed{z-index:10;}
 .theme--light .application--wrap .container .list .list_item_date{position:absolute;bottom:0;left:0px;font-size:12px;background:#000;opacity:0.4;color:#fff;padding:0 0 0 16px;height:18px;line-height:18px;}
 .theme--light .application--wrap .container .list .list_item_time{position:absolute;bottom:0;left:158px;width:auto;font-size:12px;color:#fff;height:18px;line-height:18px;}
 .theme--light .application--wrap .container .list .list_item_important{position:absolute;top:-3px;right:15px;width:auto;}
-.theme--light .application--wrap .container .list .list_item_title{height:36px;line-height:16px;}
+.theme--light .application--wrap .container .list .list_item_title{height:36px;line-height:16px;padding:0 24px;}
+.theme--light .application--wrap .container .list .input-group.checkbox{position:absolute;top:16px;left:13px;width:auto;z-index:10;}
+.theme--light .application--wrap .container .list .input-group.checkbox.input-group--active + .list__tile__content .list__tile__title{text-decoration:line-through;}
 
 .speed-dial{position:fixed !important;right:10px;bottom:10px;z-index:10;}
 .speed-dial .btn--floating .icon{top:25% !important;position:absolute;}
-
-/*
-.theme--light .application--wrap .input-group.checkbox{position:absolute;top:26px;left:-37px;width:auto;}
-
-.theme--light .application--wrap .input-group.checkbox{position:absolute;top:0;left:0;height:100%;}
-.theme--light .application--wrap .input-group.checkbox label{font-family:"NotoSansKR", sans-serif;font-size:14px;font-weight:900;color:#000;top:21px;left:16px;}
-.theme--light .application--wrap .input-group.checkbox .input-group__input{height:100%;}
-.theme--light .application--wrap .input-group.checkbox .input-group__input i{display:none;}
-.theme--light .application--wrap .input-group.checkbox .input-group__input div{width:100%;height:100%;top:0;transform:translate(0);border-radius:0;}
-.theme--light .application--wrap .input-group.checkbox .input-group__input div:before{display:none;}
-.theme--light .application--wrap .input-group.checkbox.input-group--active .input-group__input div{background:#ffc107;opacity:0.7;}
-*/
 </style>

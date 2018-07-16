@@ -69,11 +69,7 @@ export const store = new Vuex.Store({
       		commit('setUser', null)
       		router.push('/')
 		},
-		
-
-
-
-    	createTodo ({commit}, payload) {
+		createTodo ({commit}, payload) {
         	const todoItems = {
 				title: payload.title,
 				date : payload.date,
@@ -103,6 +99,20 @@ export const store = new Vuex.Store({
             	console.log(error)
         	})
 		},
+		checkTodo({commit}, payload) {
+			const todoItems = {
+            	itemId: payload.itemId,
+            	itemCheckValue: payload.itemCheckValue
+        	}
+			let user = firebase.auth().currentUser
+        	firebase.database().ref(user.uid).child(payload.itemId).update({itemCheck: payload.itemCheckValue})
+        	.then((data) => {
+            	//commit('createTodo', todoItems)
+	        })
+        	.catch(error => {
+            	console.log(error)
+        	})
+		},
 		updateMessage ({commit}, payload) {
 			const todoItems = {
             	itemId: payload.itemId,
@@ -118,9 +128,6 @@ export const store = new Vuex.Store({
             	console.log(error)
         	})
 		}
-
-
-
 	},
   	getters: {
     	isAuthenticated (state) {
