@@ -81,23 +81,24 @@
             <v-expansion-panel-content>
                 <div slot="header">Search</div>
                 <v-select
-                    v-model="option"
+                    v-model="schCategory"
                     :items="categoryList"
                     label="Search Category..."
                     prepend-icon="list"
-                    @change="searchCategory"
+                    @input="searchCategory"
                 ></v-select>
                 <v-text-field
-                    v-model="name" 
+                    v-model="schWord" 
                     prepend-icon="search"
-                    label="Search Word..." 
+                    label="Search Word..."
+                    @keyup="searchCategory"
                 ></v-text-field>
                 </v-expansion-panel-content>
         </v-expansion-panel>
 
         <v-list two-line>
             <template v-for="(item,index) in items">
-                <v-list-tile :key="item.title" v-show="item.filtered=='y'">
+                <v-list-tile :key="item.title" v-show="item.filtered == 'y'">
                     <!--<v-checkbox color="red darken-3" v-model="item.itemCheck" :value="item.itemCheck" @click="checkTodo(item, !item.itemCheck)"></v-checkbox>
                     -->
                     <v-list-tile-content>
@@ -160,7 +161,8 @@ export default {
             important: 3,
 
             kind: null,
-            option: 'All',
+            schCategory: 'All',
+            schWord: '',
             filtered: 'y',
             categoryList: [
                 'All',
@@ -252,14 +254,20 @@ export default {
 
 
         searchCategory(){
-            //console.log(this.items);
-
+            var isFiltered = true;
             for(var i=0;i<this.items.length;i++){
-                //console.log(this.items[i].kind);
-                //console.log(this.option);
+                isFiltered = true;
+                
+                if(this.schCategory !== 'All' && this.items[i].kind !== this.schCategory){
+                    isFiltered = false;
+                }
+                if(isFiltered && this.items[i].title.toUpperCase().indexOf(this.schWord.toUpperCase()) == -1){
+                    isFiltered = false;
+                }
 
-                if(this.items[i].kind == this.option){
-                    //console.log(this.items[i]);
+                if(isFiltered){
+                    this.items[i].filtered = 'y';
+                }else{
                     this.items[i].filtered = 'n';
                 }
             }
