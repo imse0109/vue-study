@@ -4,8 +4,15 @@ import HelloWorld from '@/components/Index'
 import Todo from '@/components/Todo'
 import Join from '@/components/Join'
 import Login from '@/components/Login'
+import { store } from '@/store'
 
 Vue.use(Router)
+
+const requireAuth = () => (to, from, next) => {
+	console.log(store.getters.isAuthenticated)
+	if (store.getters.isAuthenticated) return next()
+	next('/')
+}
 
 export default new Router({
   	mode: 'history',
@@ -18,7 +25,8 @@ export default new Router({
     {
       	path: '/todo',
       	name: 'Todo',
-      	component: Todo
+		component: Todo,
+		beforeEnter: requireAuth()
     },
     {
       	path: '/join',
