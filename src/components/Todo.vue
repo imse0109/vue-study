@@ -106,7 +106,9 @@
                         <v-text-field v-else v-model="itemText" required></v-text-field>
                         <v-list-tile-title v-if="item !== editingItem" class="list_item_date" v-text="'Until Time : ' + item.date"></v-list-tile-title>
                         <v-list-tile-title v-if="item !== editingItem" class="list_item_time" v-text="item.time"></v-list-tile-title>
-                        <v-list-tile-title class="list_item_important"><v-icon small color="deep-orange" v-for="item in item.important">star</v-icon></v-list-tile-title>
+                        <v-list-tile-title class="list_item_important">
+                            <v-icon small color="deep-orange" v-for="item in item.important" :key="item">star</v-icon>
+                        </v-list-tile-title>
                     </v-list-tile-content>
                     <div class="btn-wrap" v-if="item !== editingItem">
                         <v-btn color="blue-grey darken-4" class="white--text" small @click="deleteTodo(item, index)"><v-icon>delete</v-icon></v-btn>
