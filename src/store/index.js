@@ -12,13 +12,20 @@ export const store = new Vuex.Store({
     	error: null,
     	loading: false,
 		uid:null
-  	},
+	},
   	mutations: {
     	createTodo (state, payload) {
         	state.todoItems.push(payload)
     	},
     	setUser (state, payload) {
-        	state.user = payload
+			console.log(payload)
+			if(payload == null){
+				state.user = null
+				delete localStorage.user
+			}else{
+				state.user = payload
+				localStorage.user = payload
+			}
     	},
     	setError (state, payload) {
         	state.error = payload
@@ -28,7 +35,7 @@ export const store = new Vuex.Store({
     	},
     	setUid (state, payload) {
         	state.uid = payload
-    	}
+		}
   	},
   	actions: {
     	userSignUp ({commit}, payload) {
@@ -51,7 +58,7 @@ export const store = new Vuex.Store({
       		.then(firebaseUser => {
         		commit('setUser', {email: firebaseUser.email})
         		commit('setLoading', false)
-        		commit('setError', null)
+				commit('setError', null)
         		router.push('/todo')
       		})
       		.catch(error => {
@@ -66,7 +73,7 @@ export const store = new Vuex.Store({
     	},
     	userSignOut ({commit}) {
       		firebase.auth().signOut()
-      		commit('setUser', null)
+			commit('setUser', null)
       		router.push('/')
 		},
 		createTodo ({commit}, payload) {
@@ -131,6 +138,7 @@ export const store = new Vuex.Store({
 	},
   	getters: {
     	isAuthenticated (state) {
+			state.user = state.user || localStorage.user
         	return state.user !== null && state.user !== undefined
     	}
   	}
