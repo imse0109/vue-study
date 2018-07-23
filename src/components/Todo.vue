@@ -98,7 +98,7 @@
 
         <v-list two-line>
             <template v-for="(item,index) in items">
-                <v-list-tile :key="item.title" v-show="item.filtered == 'y'">
+                <v-list-tile :key="item.title + index" v-show="item.filtered == 'y'">
                     <v-checkbox v-if="item !== editingItem" color="red darken-3" v-model="item.itemCheck" :value="item.itemCheck" @click="checkTodo(item, !item.itemCheck, index)"></v-checkbox>
                     
                     <v-list-tile-content>
