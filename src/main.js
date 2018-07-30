@@ -19,7 +19,34 @@ firebase.initializeApp({
 	authDomain: "vue-works.firebaseapp.com",
 	databaseURL: "https://vue-works.firebaseio.com",
 	projectId: "vue-works",
+	storageBucket: "vue-works.appspot.com",
+    messagingSenderId: "897883747796"
 })
+
+
+
+
+
+// Retrieve Firebase Messaging object.
+const messaging = firebase.messaging();
+
+// Add the public key generated from the console here.
+messaging.usePublicVapidKey("BGmW3uP3OTI3VKIGXScfb6iBtL2KvUtBcMQCld81gPiy4dW6tdfgZUagJ2Bc5mmhTvgYl4898-8jpMBr5TaWqIU");
+
+messaging.requestPermission()
+.then(function() {
+	console.log('Notification permission granted.');
+	return messaging.getToken();
+})
+.then(function(token) {
+	console.log(token);
+})
+.catch(function(err) {
+	console.log('Unable to get permission to notify.', err);
+});
+
+
+
 
 /* eslint-disable no-new */
 const unsubscribe = firebase.auth()
