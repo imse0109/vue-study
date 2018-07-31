@@ -33,7 +33,13 @@ const messaging = firebase.messaging();
 // Add the public key generated from the console here.
 messaging.usePublicVapidKey("BGmW3uP3OTI3VKIGXScfb6iBtL2KvUtBcMQCld81gPiy4dW6tdfgZUagJ2Bc5mmhTvgYl4898-8jpMBr5TaWqIU");
 
-messaging.requestPermission()
+navigator.serviceWorker.register('/static/firebase-messaging-sw.js')
+.then((registration) => {
+	console.log('serviceWorker registration')
+	return messaging.useServiceWorker(registration)
+}).then(() => {
+	return messaging.requestPermission()
+})
 .then(function() {
 	console.log('Notification permission granted.');
 	return messaging.getToken();
@@ -44,6 +50,11 @@ messaging.requestPermission()
 .catch(function(err) {
 	console.log('Unable to get permission to notify.', err);
 });
+
+
+// messaging.onMessage(function(payload) {
+// 	console.log('onMessage: ', payload);
+// });
 
 
 
