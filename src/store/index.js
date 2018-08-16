@@ -134,6 +134,35 @@ export const store = new Vuex.Store({
         	.catch(error => {
             	console.log(error)
         	})
+		},
+
+		userLoginFacebook() {
+			var provider = new firebase.auth.FacebookAuthProvider();
+
+			console.log(provider);
+
+			firebase.auth().signInWithPopup(provider)
+			.then(function(result){
+				var token = result.credential.accessToken;
+				var user = result.user;
+				//commit('setUser', {email: user})
+				router.push('/todo');
+
+				console.log(token);
+				console.log(user);
+								
+			}).catch(function(error){
+				console.log(error.code);
+      			console.log(error.message);
+			});
+			// firebase.auth().onAuthStateChanged((provider) => {
+			// 	if (provider) {
+			// 		// Already signed in.
+					
+			// 	} else {
+			// 		// not signed in.
+			// 	}
+			// });
 		}
 	},
   	getters: {

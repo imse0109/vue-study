@@ -37,6 +37,22 @@
 				</form>
 			</v-flex>
 		</v-layout>
+
+		<v-layout row wrap>
+			<v-flex class="text-xs-center" mt-3>
+				or
+			</v-flex>
+		</v-layout>
+		<v-layout row wrap mt-3>
+			<v-flex class="text-xs-center">
+				<v-btn color="primary" type="submit" v-on:click="loginFaceBook">Facebook Login</v-btn>
+			</v-flex>
+		</v-layout>
+		<v-layout row wrap>
+			<v-flex class="text-xs-center">
+				<v-btn color="primary" type="submit">Google Login</v-btn>
+			</v-flex>
+		</v-layout>
   	</v-container>
 </template>
 
@@ -52,7 +68,10 @@ export default {
   	methods: {
     	userSignIn () {
       		this.$store.dispatch('userSignIn', { email: this.email, password: this.password })
-    	}
+		},
+		loginFaceBook() {
+			this.$store.dispatch('userLoginFacebook')
+		}
   	},
   	computed: {
     	error () {
@@ -76,3 +95,4 @@ export default {
   	}
 }
 </script>
+
