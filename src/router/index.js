@@ -4,6 +4,7 @@ import HelloWorld from '@/components/Index'
 import Todo from '@/components/Todo'
 import Join from '@/components/Join'
 import Login from '@/components/Login'
+import MineSearch from '@/components/MineSearch'
 import { store } from '@/store'
 
 Vue.use(Router)
@@ -37,6 +38,11 @@ export default new Router({
       	path: '/login',
       	name: 'Login',
       	component: Login
+    },
+    {
+      	path: '/mineSearch',
+      	name: 'MineSearch',
+      	component: MineSearch
     }
   ]
 })

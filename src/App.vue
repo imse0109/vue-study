@@ -1,6 +1,6 @@
 <template>
   	<v-app>
-		<v-navigation-drawer v-model="sidebar" app>
+		<!--<v-navigation-drawer v-model="sidebar" app>
       		<v-list>
         		<v-list-tile 
 					v-for="item in menuItems"
@@ -38,7 +38,7 @@
           			Sign Out
         		</v-btn>
 			</v-toolbar-items>
-    	</v-toolbar>
+    	</v-toolbar>-->
 
 		<v-content>
     		<router-view/>
