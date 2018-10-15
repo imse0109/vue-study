@@ -50,7 +50,7 @@
 		</v-layout>
 		<v-layout row wrap>
 			<v-flex class="text-xs-center">
-				<v-btn color="primary" type="submit">Google Login</v-btn>
+				<v-btn color="primary" type="submit" v-on:click="loginGoogle">Google Login</v-btn>
 			</v-flex>
 		</v-layout>
   	</v-container>
@@ -71,6 +71,9 @@ export default {
 		},
 		loginFaceBook() {
 			this.$store.dispatch('userLoginFacebook')
+		},
+		loginGoogle() {
+			this.$store.dispatch('userLoginGoogle')
 		}
   	},
   	computed: {

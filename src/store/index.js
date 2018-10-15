@@ -138,31 +138,34 @@ export const store = new Vuex.Store({
 
 		userLoginFacebook() {
 			var provider = new firebase.auth.FacebookAuthProvider();
-
-			console.log(provider);
-
-			firebase.auth().signInWithPopup(provider)
-			.then(function(result){
+			
+			firebase.auth().signInWithPopup(provider).then(function(result) {
 				var token = result.credential.accessToken;
 				var user = result.user;
-				//commit('setUser', {email: user})
-				router.push('/todo');
 
-				console.log(token);
-				console.log(user);
-								
-			}).catch(function(error){
-				console.log(error.code);
-      			console.log(error.message);
+				router.push('/todo')
+			}).catch(function(error) {
+				var errorCode = error.code;
+				var errorMessage = error.message;
+				var email = error.email;
+				var credential = error.credential;
 			});
-			// firebase.auth().onAuthStateChanged((provider) => {
-			// 	if (provider) {
-			// 		// Already signed in.
-					
-			// 	} else {
-			// 		// not signed in.
-			// 	}
-			// });
+		},
+
+		userLoginGoogle() {
+			var provider = new firebase.auth.GoogleAuthProvider();
+			
+			firebase.auth().signInWithPopup(provider).then(function(result) {
+				var token = result.credential.accessToken;
+				var user = result.user;
+
+				router.push('/todo')
+			}).catch(function(error) {
+				var errorCode = error.code;
+				var errorMessage = error.message;
+				var email = error.email;
+				var credential = error.credential;
+			});
 		}
 	},
   	getters: {
