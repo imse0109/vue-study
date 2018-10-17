@@ -143,13 +143,14 @@ export const store = new Vuex.Store({
 				var token = result.credential.accessToken;
 				var user = result.user;
 
-				router.push('/todo')
 			}).catch(function(error) {
 				var errorCode = error.code;
 				var errorMessage = error.message;
 				var email = error.email;
 				var credential = error.credential;
 			});
+
+			router.push('/todo')
 		},
 
 		userLoginGoogle() {
@@ -159,13 +160,14 @@ export const store = new Vuex.Store({
 				var token = result.credential.accessToken;
 				var user = result.user;
 
-				router.push('/todo')
 			}).catch(function(error) {
 				var errorCode = error.code;
 				var errorMessage = error.message;
 				var email = error.email;
 				var credential = error.credential;
 			});
+
+			router.push('/todo')
 		}
 	},
   	getters: {
