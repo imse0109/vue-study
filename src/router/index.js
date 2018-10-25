@@ -4,6 +4,8 @@ import HelloWorld from '@/components/Index'
 import Todo from '@/components/Todo'
 import Join from '@/components/Join'
 import Login from '@/components/Login'
+
+import codingTest1 from '@/components/codingTest/codingTest1'
 import { store } from '@/store'
 
 Vue.use(Router)
@@ -37,6 +39,11 @@ export default new Router({
       	path: '/login',
       	name: 'Login',
       	component: Login
+    },
+    {
+      	path: '/codingTest/codingTest1',
+      	name: 'codingTest1',
+      	component: codingTest1
     }
   ]
 })
