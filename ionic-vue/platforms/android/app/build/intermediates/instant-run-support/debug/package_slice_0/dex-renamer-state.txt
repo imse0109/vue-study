@@ -1,0 +1,4 @@
+#Tue Oct 30 17:16:45 KST 2018
+base.0=D\:\\work\\study\\node\\vueStudy\\vue-study\\ionic-vue\\platforms\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\1
+path.0=classes.dex
+renamed.0=classes.dex
