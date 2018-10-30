@@ -36,7 +36,7 @@ export default {
 			A: 'A3456K',
 			B: 'A2345Q',
 			resultValue: '5',
-			testCode:'function test('+A+','+B+'){\n\n}'
+			testCode:'function execute(var1, var2){\n\n}'
     	}
   	},
   	methods: {
@@ -44,16 +44,18 @@ export default {
 				console.log(this.A);
 				console.log(this.B);
 				console.log(this.testCode);
+				console.log(this);
 
-				//console.log(eval(this.testCode));
+				//var 
 
-				var resultNum = eval(this.testCode + 'test()');
+				var sentence = '';
+				sentence += this.testCode + ';';
+				sentence += 'execute();';
 
-				//return eval(this.testCode);
+				console.log(eval(sentence));
 
-				
+				this.resultValue = eval(sentence);
 
-				console.log("Result : " + resultNum);
 		  }
   	},
   	computed: {
