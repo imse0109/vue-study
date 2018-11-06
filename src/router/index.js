@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/Index'
+import Main from '@/components/Index'
 import Todo from '@/components/Todo'
 import Join from '@/components/Join'
 import Login from '@/components/Login'
@@ -15,12 +15,12 @@ const requireAuth = () => (to, from, next) => {
 }
 
 export default new Router({
-  	mode: 'history',
+  	//mode: 'history',
   	routes: [
     {
       	path: '/',
-      	name: 'Index',
-      	component: HelloWorld
+      	name: 'Main',
+      	component: Main
     },
     {
       	path: '/todo',
