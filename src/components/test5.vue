@@ -79,7 +79,7 @@
                 <v-btn block color="blue-grey darken-4" class="white--text" @click="createTodo"><v-icon>add</v-icon></v-btn>
             </v-expansion-panel-content>
             <v-expansion-panel-content>
-                <div slot="header">Search</div>
+                <div slot="header">수정수정수정수정수정</div>
                 <v-select
                     v-model="schCategory"
                     :items="categoryList"
